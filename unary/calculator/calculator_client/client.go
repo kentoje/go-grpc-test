@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/kentoje/grpc-test/unary/calculator/calculatorpb"
 	"google.golang.org/grpc"
-	"grpc-test/calculator/calculatorpb"
 	"log"
 )
 

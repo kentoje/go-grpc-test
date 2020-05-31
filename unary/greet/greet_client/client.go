@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/kentoje/grpc-test/unary/greet/greetpb"
 	"google.golang.org/grpc"
-	"grpc-test/greet/greetpb"
 	"log"
 )
 

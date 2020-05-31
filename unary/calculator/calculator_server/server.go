@@ -3,19 +3,18 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/kentoje/grpc-test/unary/calculator/calculatorpb"
 	"google.golang.org/grpc"
-	"grpc-test/greet/greetpb"
 	"log"
 	"net"
 )
 
 type server struct {}
 
-func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
+func (*server) Sum(ctx context.Context, req *calculatorpb.SumRequest) (*calculatorpb.SumResponse, error) {
 	fmt.Printf("Greet function was invoked with %v\n: ", req)
-	firstName := req.GetGreeting().GetFirstName()
-	result := "Hello " + firstName
-	res := &greetpb.GreetResponse{
+	result := req.GetFirstNumber() + req.GetSecondNumber()
+	res := &calculatorpb.SumResponse{
 		Result: result,
 	}
 
@@ -25,11 +24,11 @@ func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 func main() {
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		log.Fatalln("Failed to listen: %v, err")
 	}
 
 	s := grpc.NewServer()
-	greetpb.RegisterGreetServiceServer(s, &server{})
+	calculatorpb.RegisterCalculatorServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
